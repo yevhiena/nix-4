@@ -1,5 +1,6 @@
 .idea
 *.iml
 *.class
-unit_1_compile/maven_compile/app/target
-unit_1_compile/ant_compile/build
+/unit_1_compile/ant_compile/build/
+/unit_1_compile/maven_compile/app/target/
+/unit_1_compile/terminal/build/
