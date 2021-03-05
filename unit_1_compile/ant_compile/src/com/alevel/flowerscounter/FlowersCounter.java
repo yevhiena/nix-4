@@ -8,6 +8,6 @@ public class FlowersCounter {
     public void printAmountOfFlowers(){
         Flowers fl =new Flowers();
         int amountOfFlowers = MapUtils.size(fl.getFlowers()) ;
-        System.out.println("There are "+ amountOfFlowers + " flowers in store");
+        System.out.println("There are "+ amountOfFlowers + " types of flowers in store");
     }
 }

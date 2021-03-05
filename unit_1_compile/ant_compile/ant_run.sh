@@ -1,3 +1,4 @@
+#!/bin/sh
 echo SET ANT ENVIRONMENT
 cd ../ant
 . ./setantenv.sh

@@ -1,3 +1,4 @@
+#!/bin/sh
 echo MAVEN COMPILE OUTPUT:
 cd app
 mvn clean install
