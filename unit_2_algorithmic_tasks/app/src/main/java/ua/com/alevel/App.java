@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
     public static void main( String[] args ) throws IOException {
@@ -18,9 +15,16 @@ public class App
         System.out.println("INPUT a string:");
 
         String randomStringWithNumbers = buf.readLine();
+        System.out.println("The sum of numbers in random string is: \n"
+                + SumOfNumbersInRandomString.sumOfNumbers(randomStringWithNumbers));
 
 
 
+        System.out.println("TASK 2: Sort of symbols");
+        System.out.println("INPUT a string:");
+
+        String stringForSorting = buf.readLine();
+        SortSymbolsInRandomString.sort(stringForSorting);
 
 
         EndOfLessons end = new EndOfLessons();
@@ -32,5 +36,7 @@ public class App
                 "The " + inputNumberOfLessons + " lesson ends at: \n " + end.calculateEndOfLesson(inputNumberOfLessons));
 
 
+
+        buf.close();
     }
 }
