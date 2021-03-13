@@ -14,6 +14,7 @@ public class SumOfNumbersInRandomString {
         while (matcher.find()) {
             sum += Integer.parseInt(matcher.group());
         }
+        System.out.println("Notice: counting the sum of numbers intentionally, not digits");
         return sum;
     }
 

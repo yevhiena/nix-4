@@ -20,7 +20,7 @@ public class App
 
 
 
-        System.out.println("TASK 2: Sort of symbols");
+        System.out.println("\n\nTASK 2: Sort of symbols");
         System.out.println("INPUT a string:");
 
         String stringForSorting = buf.readLine();
@@ -28,7 +28,7 @@ public class App
 
 
         EndOfLessons end = new EndOfLessons();
-        System.out.println("TASK 3: End of lessons");
+        System.out.println("\n\nTASK 3: End of lessons");
         System.out.println("INPUT a number of lessons from 1 to 10:");
         int inputNumberOfLessons = Integer.parseInt(buf.readLine());
 
