@@ -3,6 +3,7 @@
 *.class
 /out
 /unit_1_compile/ant_compile/build/
-/unit_1_compile/maven_compile/app/target/
 /unit_1_compile/terminal/build/
-/unit_2_algorithmic_tasks/app/target
+/target/
+**/target/**
+
