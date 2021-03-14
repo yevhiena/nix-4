@@ -1,4 +1,4 @@
-package ua.com.alevel;
+package ua.com.alevel.tasks;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package ua.com.alevel;
+package ua.com.alevel.tasks;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,8 +16,7 @@ public class SortSymbolsInRandomString {
                 map.put(c, map.get(c) + 1);
             }
         }
-        System.out.println("Notice: characters in upper and lower case are counted as the same intentionally\n " +
-                "OUTPUT:");
+
         Iterator<Map.Entry<Character, Integer>> iterator = map.entrySet().iterator();
         for (int i = 0; i < map.size(); ++i) {
             if (iterator.hasNext()) {
