@@ -8,9 +8,16 @@ public class ReverseStringUtil {
     public static String reverse(String src) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for(int i = src.length() - 1; i>=0; i--){
-            stringBuilder.append(src.charAt(i));
+        String[] sarr = src.split("\\b");
+        for (String s : sarr) {
+            if(Character.isLetter(s.charAt(0))){
+                for(int i = s.length() - 1; i>=0; i--){
+                    stringBuilder.append(s.charAt(i));
+                }
+            }
+            else stringBuilder.append(s);
         }
+
         return stringBuilder.toString();
     }
 
