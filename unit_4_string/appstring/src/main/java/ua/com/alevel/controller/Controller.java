@@ -27,8 +27,7 @@ public class Controller {
                     case "1" : {
                         switchOperation();
                     }
-                    default:
-                        System.out.println("Incorrect operation");
+
                 }
                 System.out.println("Please, check your operations: 0 - exit, 1 - continue  ");
 
@@ -59,7 +58,7 @@ public class Controller {
                 readReverseSubStringBetweenIndexes();
                 break;
             default:
-                System.out.println("Incorrect operation");
+                throw new RuntimeException("Incorrect operation");
         }
     }
 
