@@ -12,7 +12,6 @@ public class ConsoleFactory{
     private static ConsoleFactory instance;
     private Reflections reflections;
     private Set<Class<? extends ConsoleService>> consoleSrvices;
-    //private Map<Class<? extends CalcSrvice>>
 
     private ConsoleFactory(){
         reflections = new Reflections("ua.com.alevel");
@@ -32,10 +31,10 @@ public class ConsoleFactory{
                 try {
                     return consoleService.getDeclaredConstructor().newInstance();
                 } catch (Exception e) {
-                    throw new RuntimeException("Idiot");
+                    throw new RuntimeException("Exception");
                 }
             }
         }
-        throw new RuntimeException("Idiot");
+        throw new RuntimeException("Exception");
     }
 }

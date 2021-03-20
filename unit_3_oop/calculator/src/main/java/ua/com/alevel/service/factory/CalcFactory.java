@@ -12,7 +12,6 @@ public class CalcFactory {
     private static CalcFactory instance;
     private Reflections reflections;
     private Set<Class<? extends CalcSrvice>> calcSrvices;
-    //private Map<Class<? extends CalcSrvice>>
 
     private CalcFactory(){
         reflections = new Reflections("ua.com.alevel");
@@ -32,10 +31,10 @@ public class CalcFactory {
                 try {
                     return calcSrvice.getDeclaredConstructor().newInstance();
                 } catch (Exception e) {
-                    throw new RuntimeException("Idiot");
+                    throw new RuntimeException("Exception");
                 }
             }
         }
-        throw new RuntimeException("Idiot");
+        throw new RuntimeException("Exception");
     }
 }
