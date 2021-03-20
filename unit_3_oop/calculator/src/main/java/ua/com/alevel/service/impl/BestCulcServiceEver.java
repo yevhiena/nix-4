@@ -16,7 +16,13 @@ public class BestCulcServiceEver implements CalcSrvice{
 
     @Override
     public BigDecimal divide(BigDecimal a, BigDecimal b) {
-        return a.divide(b, 2, RoundingMode.CEILING);
+        try {
+            return a.divide(b, 2, RoundingMode.CEILING);
+        }
+        catch (ArithmeticException e) {
+            e.printStackTrace();
+            throw new ArithmeticException("e = " + e.getMessage());
+        }
     }
 
     @Override
