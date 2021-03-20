@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 public interface ConsoleService {
 
-    BigDecimal getMessageFromConsole();
+    String getMessageFromConsole();
 
     void writeMessageToConsole(String message);
 }

@@ -5,20 +5,19 @@ import ua.com.alevel.service.ConsoleService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 
 
 
 public class ConsoleHelperFirstVersion implements ConsoleService {
-    BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
+   private final BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
 
     @Override
-    public BigDecimal getMessageFromConsole() {
-        BigDecimal value;
+    public String getMessageFromConsole() {
+        String message;
 
         try {
-            value = new BigDecimal(String.valueOf(buf.readLine()));
-            return value;
+            message = buf.readLine();
+            return message;
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("e + " + e.getMessage());
