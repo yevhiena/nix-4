@@ -1,5 +1,6 @@
 package ua.com.alevel.controller;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import ua.com.alevel.service.CalcSrvice;
 import ua.com.alevel.service.ConsoleService;
 
@@ -28,7 +29,10 @@ public class Controller {
                     }
                     case "1" : {
                         switchOperation();
+                        break;
                     }
+                    default:
+                        System.out.println("Sorry, incorrect operation");
                 }
                 consoleService.writeMessageToConsole("Please, check your operations: 0 - exit, 1 - continue  ");
 
@@ -62,41 +66,67 @@ public class Controller {
                 readSubtract();
                 break;
             default:
-                throw new RuntimeException("Incorrect operation");
+                System.out.println("Sorry, incorrect operation");
         }
     }
 
 
     public void readSum(){
         consoleService.writeMessageToConsole("Please, enter first value: ");
-        BigDecimal valueLeft = consoleService.getMessageFromConsole();
+        String firstValue = consoleService.getMessageFromConsole();
         consoleService.writeMessageToConsole("Please, enter second value: ");
-        BigDecimal valueRight = consoleService.getMessageFromConsole();
-        consoleService.writeMessageToConsole("The result is " + calcSrvice.sum(valueLeft, valueRight));
+        String secondValue = consoleService.getMessageFromConsole();
+        if(NumberUtils.isCreatable(firstValue) && NumberUtils.isDigits(secondValue)){
+            BigDecimal valueLeft = new BigDecimal(firstValue);
+            BigDecimal valueRight = new BigDecimal(secondValue);
+            consoleService.writeMessageToConsole("The result is " + calcSrvice.sum(valueLeft, valueRight));
+        } else {
+            System.out.println("Sorry, Entered data is not a number!");
+        }
     }
     public void readMultiply(){
 
         consoleService.writeMessageToConsole("Please, enter first value: ");
-        BigDecimal valueLeft = consoleService.getMessageFromConsole();
+        String firstValue = consoleService.getMessageFromConsole();
         consoleService.writeMessageToConsole("Please, enter second value: ");
-        BigDecimal valueRight = consoleService.getMessageFromConsole();
-        consoleService.writeMessageToConsole("The result is " + calcSrvice.multiply(valueLeft, valueRight));
+        String secondValue = consoleService.getMessageFromConsole();
+        if(NumberUtils.isCreatable(firstValue) && NumberUtils.isDigits(secondValue)){
+            BigDecimal valueLeft = new BigDecimal(firstValue);
+            BigDecimal valueRight = new BigDecimal(secondValue);
+            consoleService.writeMessageToConsole("The result is " + calcSrvice.multiply(valueLeft, valueRight));
+        } else {
+            System.out.println("Sorry, Entered data is not a number!");
+        }
     }
 
     public void readDivide(){
 
-         consoleService.writeMessageToConsole("Please, enter first value: ");
-        BigDecimal valueLeft = consoleService.getMessageFromConsole();
+        consoleService.writeMessageToConsole("Please, enter first value: ");
+        String firstValue = consoleService.getMessageFromConsole();
         consoleService.writeMessageToConsole("Please, enter second value: ");
-        BigDecimal valueRight = consoleService.getMessageFromConsole();
-        consoleService.writeMessageToConsole("The result is " + calcSrvice.divide(valueLeft, valueRight));
+        String secondValue = consoleService.getMessageFromConsole();
+        if(NumberUtils.isCreatable(firstValue) && NumberUtils.isDigits(secondValue)){
+            BigDecimal valueLeft = new BigDecimal(firstValue);
+            BigDecimal valueRight = new BigDecimal(secondValue);
+            if(valueRight.intValue() !=0){
+                consoleService.writeMessageToConsole("The result is " + calcSrvice.divide(valueLeft, valueRight));
+            } else System.out.println("Sorry, Division by zero is forbidden!");
+        } else {
+            System.out.println("Sorry, Entered data is not a number!");
+        }
     }
     public void readSubtract(){
 
         consoleService.writeMessageToConsole("Please, enter first value: ");
-        BigDecimal valueLeft = consoleService.getMessageFromConsole();
+        String firstValue = consoleService.getMessageFromConsole();
         consoleService.writeMessageToConsole("Please, enter second value: ");
-        BigDecimal valueRight = consoleService.getMessageFromConsole();
-        consoleService.writeMessageToConsole("The result is " + calcSrvice.subtract(valueLeft, valueRight));
+        String secondValue = consoleService.getMessageFromConsole();
+        if(NumberUtils.isCreatable(firstValue) && NumberUtils.isDigits(secondValue)){
+            BigDecimal valueLeft = new BigDecimal(firstValue);
+            BigDecimal valueRight = new BigDecimal(secondValue);
+            consoleService.writeMessageToConsole("The result is " + calcSrvice.subtract(valueLeft, valueRight));
+        } else {
+            System.out.println("Sorry, Entered data is not a number!");
+        }
     }
 }
