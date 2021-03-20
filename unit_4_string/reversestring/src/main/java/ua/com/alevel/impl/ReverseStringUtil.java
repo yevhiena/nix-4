@@ -40,4 +40,21 @@ public class ReverseStringUtil {
 
         return stringBuilder.toString();
     }
+
+    public static String reverse(String src, String firstWord, String lastWord) {
+
+        int firstIndex = src.indexOf(firstWord);
+        int lastIndex = src.indexOf(lastWord);
+        return reverse(src, firstIndex, lastIndex + lastWord.length() - 1);
+
+    }
+
+    public static String reverse(String src, char firstSymbol, char lastSymbol) {
+
+        int firstIndex = src.indexOf(firstSymbol);
+        int lastIndex = src.indexOf(lastSymbol);
+        return reverse(src, firstIndex, lastIndex);
+
+    }
+
 }
