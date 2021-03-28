@@ -7,7 +7,7 @@ import java.util.Set;
 public class DigitsArray {
 
     public int getUniqueSymbols(String stringOfDigits){
-        String s = stringOfDigits.replaceAll(" ", "");
+        String s = stringOfDigits.replaceAll("[. ]", "");
         char[] chars = s.toCharArray();
         Set<Character> uniqueChars = new HashSet<>();
         for (char c : chars) {

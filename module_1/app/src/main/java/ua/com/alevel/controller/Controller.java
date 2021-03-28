@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -97,7 +98,10 @@ public class Controller {
         DigitsArray digitsArray = new DigitsArray();
         System.out.println("Enter an array of digits, separate every digit by space(example '1 2 3'): ");
         String str = buf.readLine();
-        System.out.println("The number of unique digits is " + digitsArray.getUniqueSymbols(str));
+        if(str.replaceAll("[. ]", "").chars().allMatch(x -> Character.isDigit(x)) == true){
+            System.out.println("The number of unique digits is(not numbers) " + digitsArray.getUniqueSymbols(str));
+        } else System.out.println("Input is invalid, you should input only numbers");
+
     }
 
     private void readChess() throws IOException {
@@ -126,13 +130,19 @@ public class Controller {
     private void readTriangleSquare() throws IOException {
         HashMap<String, Double> map = new HashMap<>();
         System.out.println(" enter the coordinates(x1,y1) of the first point");
+        System.out.println("Enter X2 coordinate: ");
         map.put("x1", Double.parseDouble(buf.readLine()));
+        System.out.println("Enter Y1 coordinate: ");
         map.put("y1", Double.parseDouble(buf.readLine()));
         System.out.println(" enter the coordinates(x2,y2) of the second point");
+        System.out.println("Enter X2 coordinate: ");
         map.put("x2", Double.parseDouble(buf.readLine()));
+        System.out.println("Enter Y1 coordinate: ");
         map.put("y2", Double.parseDouble(buf.readLine()));
         System.out.println(" enter the coordinates(x3,y3) of the third point");
+        System.out.println("Enter X2 coordinate: ");
         map.put("x3", Double.parseDouble(buf.readLine()));
+        System.out.println("Enter Y1 coordinate: ");
         map.put("y3", Double.parseDouble(buf.readLine()));
         CalculateTriangleSquare calculateTriangleSquare = new CalculateTriangleSquare();
         double square= calculateTriangleSquare.getTriangleSquare(map);
@@ -151,7 +161,7 @@ public class Controller {
 
     private void readThirdLevel() throws IOException {
         GameLifeNextGeneration gameLifeNextGeneration = new GameLifeNextGeneration();
-        System.out.println("The game field wil be generated randomly");
+        System.out.println("The game field will be generated randomly");
         System.out.println("Enter the length of the gaming field: ");
         int length = Integer.parseInt(buf.readLine());
         System.out.println("Enter the width of the gaming field: ");
