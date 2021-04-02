@@ -1,0 +1,93 @@
+package ua.com.alevel.service.impl;
+
+import org.apache.log4j.Logger;
+import ua.com.alevel.dao.AuthorDao;
+import ua.com.alevel.dao.BookDao;
+import ua.com.alevel.dao.impl.AuthorDaoImpl;
+import ua.com.alevel.dao.impl.BookDaoImpl;
+import ua.com.alevel.entity.Book;
+import ua.com.alevel.service.BookService;
+
+import java.util.List;
+
+public class BookServiceImpl implements BookService {
+
+    private final BookDao bookDao = new BookDaoImpl();
+    private final AuthorDao authorDao = new AuthorDaoImpl();
+
+    private final Logger logger = Logger.getLogger(BookServiceImpl.class);
+
+    @Override
+    public void create(Book data) {
+        bookDao.create(data);
+        data = bookDao.findBookByName(data.getTitle());
+        logger.info("Create book in db " + data);
+
+    }
+
+    @Override
+    public Book read(int id) {
+        logger.info("Start reading book");
+        if(!exist(id)) {
+            logger.error("book does not exist, id = " + id);
+            throw new RuntimeException("book does not exist");
+        }
+        logger.info("Read book from db" + bookDao.read(id));
+        return bookDao.read(id);
+    }
+
+
+    @Override
+    public List<Book> read() {
+        logger.info("Read all books from db");
+        return bookDao.read();
+    }
+
+    @Override
+    public void update(Book data) {
+
+        logger.info("Start updating book, id=" + data.getId());
+        if(!exist(data.getId())) {
+            logger.error("Book does not exist, id=" + data.getId());
+            throw new RuntimeException("book does not exist");
+        }
+        bookDao.update(data);
+        logger.info("Finish updating book " + bookDao.read(data.getId()));
+    }
+
+
+    @Override
+    public void delete(int id) {
+        logger.info("Start deleting book, id=" + id);
+        if(!exist(id)) {
+            logger.error("book does not exist, id= " + id);
+            throw new RuntimeException("book does not exist");
+        }
+        bookDao.delete(id);
+        logger.info("Finish deleting book, id=" + id);
+
+    }
+
+    @Override
+    public boolean exist(int id) {
+        logger.info("Check if book exists, id=" + id);
+        return bookDao.exist(id);
+    }
+
+    @Override
+    public List<Book> readBooksByAuthor(int id) {
+
+        logger.info("Read books by author, author id=" + id);
+        if(!authorDao.exist(id)){
+            logger.error("Author does not exist, id=" + id);
+            throw new RuntimeException("Author does not exist, id=" + id);
+        }
+        return bookDao.readBooksByAuthor(id);
+    }
+
+    @Override
+    public Book findBookByName(String title) {
+        logger.info("Find book by name: " + title);
+        return bookDao.findBookByName(title);
+    }
+}
