@@ -19,9 +19,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void create(Book data) {
+        logger.info("Start creating book");
+        Book book = bookDao.findBookByName(data.getTitle());
+
+        if (book != null && book.getAuthorId().containsAll(data.getAuthorId())){
+            logger.info("Book with the same title and authors already exist " + book);
+            throw new RuntimeException("Book with the same title and authors already exist " + book);
+        }
         bookDao.create(data);
-        data = bookDao.findBookByName(data.getTitle());
-        logger.info("Create book in db " + data);
+        logger.info("Created book in db " + data);
 
     }
 

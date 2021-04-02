@@ -19,9 +19,16 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void create(Author data) {
-        authorDao.create(data);
-        data = authorDao.findAuthorByName(data.getFirstName(), data.getLastName());
-        logger.info("Create author in db " + data);
+        logger.info("Start creating author");
+        Author author = authorDao.findAuthorByName(data.getFirstName(), data.getLastName());
+        if( author == null){
+            authorDao.create(data);
+            logger.info("Created author in db " + data);
+        }
+        else {
+            logger.error("Author already exists " + author);
+            throw new RuntimeException("Author already exists " + author);
+        }
     }
 
     @Override
