@@ -6,4 +6,5 @@
 /unit_1_compile/terminal/build/
 /target/
 **/target/**
+*/logs/
 
