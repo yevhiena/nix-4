@@ -13,39 +13,6 @@ public class AuthorController {
 
     private final AuthorService authorService = new AuthorServiceImpl();
 
-
-//    @SneakyThrows
-//    public void run() {
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-//        System.out.println("Hello!");
-//        System.out.println("Select you event by entering a number");
-//        System.out.println("0 - exit");
-//        System.out.println("1 - create author");
-//        System.out.println("2 - read author by id");
-//        System.out.println("3 - read all authors");
-//        System.out.println("4 - read authors by book");
-//        System.out.println("5 - update author");
-//        System.out.println("6 - delete author");
-//
-//
-//        String position;
-//        while ((position = reader.readLine()) != null) {
-//            switch (position) {
-//                case "0" : {
-//                    System.exit(0);
-//                }
-//                case "1" : create(reader); break;
-//                case "2" : readAuthorById(reader); break;
-//                case "3" : readAllAuthors(reader); break;
-//                case "4" : readAuthorByBook(reader); break;
-//                case "5" : update(reader); break;
-//                case "6" : delete(reader); break;
-//            }
-//            System.out.println("Your variant: if you want exit, please input 0, else, repeat logic");
-//        }
-//        reader.close();
-//    }
-
     @SneakyThrows
     public void create(BufferedReader reader) {
 

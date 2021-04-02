@@ -18,37 +18,6 @@ public class BookController {
         private final AuthorService authorService = new AuthorServiceImpl();
         private final BookService bookService = new BookServiceImpl();
 
-//        @SneakyThrows
-//        public void run() {
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-//            System.out.println("Hello!");
-//            System.out.println("Select you event by entering a number");
-//            System.out.println("0 - exit");
-//            System.out.println("1 - create book");
-//            System.out.println("2 - read book by id");
-//            System.out.println("3 - read all books");
-//            System.out.println("4 - read books by author");
-//            System.out.println("5 - update book");
-//            System.out.println("6 - delete book");
-//
-//            String position;
-//            while ((position = reader.readLine()) != null) {
-//                switch (position) {
-//                    case "0" : {
-//                        System.exit(0);
-//                    }
-//                    case "1" : create(reader); break;
-//                    case "2" : readBookById(reader); break;
-//                    case "3" : readAllBooks(reader); break;
-//                    case "4" : readBooksByAuthor(reader); break;
-//                    case "5" : update(reader); break;
-//                    case "6" : delete(reader); break;
-//                }
-//                System.out.println("Your variant: if you want exit, please input 0, else, repeat logic");
-//            }
-//            reader.close();
-//        }
-
         @SneakyThrows
         public void create(BufferedReader reader) {
 
@@ -129,7 +98,7 @@ public class BookController {
         public void readBooksByAuthor(BufferedReader reader){
             System.out.println("please enter author id ...");
             int id = Integer.parseInt(reader.readLine());
-            if(authorService.exist(id)) System.out.println("Books written by author " + bookService.readBooksByAuthor(id));
-            else System.out.println("author does not exist");
+            System.out.println("Books written by author " + bookService.readBooksByAuthor(id));
+
         }
 }
