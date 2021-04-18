@@ -165,8 +165,9 @@ public class OrderedList<E extends Comparable<E>> implements List<E>{
 
     @Override
     public void clear() {
-        actualSize = 0;
-        elementData = EMPTY_ELEMENT_DATA;
+        this.capacity = 0;
+        this.actualSize = 0;
+        this.elementData = EMPTY_ELEMENT_DATA;
     }
 
     @Override
@@ -346,13 +347,13 @@ public class OrderedList<E extends Comparable<E>> implements List<E>{
 
         @Override
         public E previous() {
-            int i = this.cursor - 1;
-            if (i < 0) {
+            if (hasPrevious()) {
                 throw new NoSuchElementException("No more previous elements");
             } else {
-                E[] elementData = OrderedList.this.elementData;
-                this.cursor = i;
-                return elementData[this.lastRet = i];
+                this.lastRet = cursor;
+                int i = cursor;
+                cursor--;
+                return OrderedList.this.elementData[i];
             }
         }
         @Override
