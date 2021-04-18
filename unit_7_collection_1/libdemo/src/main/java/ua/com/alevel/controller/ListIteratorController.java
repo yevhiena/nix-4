@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ListIterator;
-import java.util.NoSuchElementException;
 
 public class ListIteratorController<E extends Comparable<E>>{
     private final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
@@ -63,7 +62,7 @@ public class ListIteratorController<E extends Comparable<E>>{
         try {
             Object o = it.next();
             System.out.println("next element is " + o);
-        } catch (NoSuchElementException e){
+        } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
@@ -73,6 +72,8 @@ public class ListIteratorController<E extends Comparable<E>>{
             System.out.println("element was removed");
         } catch (IllegalStateException e){
             System.out.println(e.getMessage());
+        }catch (Exception e){
+            System.out.println("Cannot remove object");
         }
     }
 
@@ -84,7 +85,7 @@ public class ListIteratorController<E extends Comparable<E>>{
         try {
             Object o = it.previous();
             System.out.println("previous is " + o);
-        } catch (NoSuchElementException e){
+        } catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
