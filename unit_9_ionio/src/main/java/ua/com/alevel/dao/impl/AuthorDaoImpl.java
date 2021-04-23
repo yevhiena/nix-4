@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class AuthorDaoImpl implements AuthorDao {
 
-    private  final File fileAuthors = new File("unit_9_ionio/src/main/java/ua/com/alevel/db/authors.csv");
+    private  final String fileAuthors = "src/main/java/ua/com/alevel/db/authors.csv";
     private final BookDao bookDao = new BookDaoImpl();
 
 

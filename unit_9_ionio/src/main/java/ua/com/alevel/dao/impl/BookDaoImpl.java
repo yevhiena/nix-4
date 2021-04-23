@@ -6,7 +6,6 @@ import com.opencsv.exceptions.CsvException;
 import ua.com.alevel.dao.BookDao;
 import ua.com.alevel.entity.Book;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BookDaoImpl implements BookDao {
 
-    private  final File fileBooks = new File("unit_9_ionio/src/main/java/ua/com/alevel/db/books.csv");
+    private  final String fileBooks = "src/main/java/ua/com/alevel/db/books.csv";
 
 
     @Override
