@@ -23,7 +23,7 @@ public class AuthorController {
             author.setLastName(firstLastName[1]);
             authorService.create(author);
         } catch (IndexOutOfBoundsException e){
-            System.out.println("Invalid input for first and last name");
+            System.out.println("Invalid input");
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
