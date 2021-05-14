@@ -10,7 +10,7 @@ public class Task1Controller {
 
     public void run() throws IOException {
         System.out.println("--------------------------------------------------------------------");
-        System.out.println("TASK 3 ");
+        System.out.println("TASK 1 ");
         System.out.println("--------------------------------------------------------------------\n");
 
         List<String> dates = DateParser.readFromFile("module_2/task_1/src/main/java/ua.com.alevel/db/dates.txt");

@@ -44,7 +44,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ua.com.alevel.Start</mainClass>
+                            <mainClass>ua.com.alevel.ModuleMain2</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
