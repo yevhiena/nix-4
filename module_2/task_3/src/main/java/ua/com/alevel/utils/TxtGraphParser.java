@@ -18,7 +18,7 @@ public class TxtGraphParser {
     private static final Map<String, List<String>> neighbours = new HashMap<>();
 
     private static void parseTxt() throws IOException {
-        List<String> lines = Files.readAllLines(Paths.get("module/task3/src/main/java/ua/com/alevel/db/input.txt"));
+        List<String> lines = Files.readAllLines(Paths.get("module_2/task_3/src/main/java/ua/com/alevel/db/input.txt"));
 
         int numberOfCities = Integer.parseInt(lines.get(0));
         int indexOfLine = 1;
