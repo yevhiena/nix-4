@@ -3,7 +3,7 @@ In this algorithm we have only one foreach loop through ArrayList with names, it
 
 Inside these loop we use containsKey(), remove(), put() methods of LinkedHashMap, time complexity of these methods is O(1) according to this https://www.baeldung.com/java-collections-complexity
 
-Finally, time complexity of algorithm calculates as following:
+Finally, time complexity of algorithm is calculated as following:
 
 O(n) * (O(1)+O(1)+O(1)) = O(n)
 
