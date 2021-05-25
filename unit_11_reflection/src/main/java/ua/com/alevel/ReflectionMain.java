@@ -20,7 +20,7 @@ public class ReflectionMain {
         for (Field field : fields) {
             try {
                 PropertyKey propertyKeyAnnotation = field.getAnnotation(PropertyKey.class);
-                if (propertyKeyAnnotation == null) break;
+                if (propertyKeyAnnotation == null) continue;
                 else  {
 
                     if(field.getType().getTypeName().equals(int.class.getTypeName())){

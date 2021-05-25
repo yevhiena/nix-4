@@ -12,10 +12,11 @@ public class AppProperties {
     @PropertyKey("connections.db.url")
     public String urlOfConnection;
 
+    public String filePath;
+
     @PropertyKey("logger.file.maxSize")
     public int maxFileSize;
 
-    public String filePath;
 
     @Override
     public String toString() {
