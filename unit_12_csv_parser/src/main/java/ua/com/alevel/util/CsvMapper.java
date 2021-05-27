@@ -47,9 +47,6 @@ public class CsvMapper {
                     } catch (IllegalAccessException e) {
                         throw new RuntimeException();
                     }
-                } else {
-                    field.setAccessible(true);
-                    field.set(object, i);
                 }
             }
             objects.add(object);

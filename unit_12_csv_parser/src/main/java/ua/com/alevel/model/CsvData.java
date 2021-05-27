@@ -7,6 +7,7 @@ import ua.com.alevel.annotation.CsvCell;
 @Getter
 @Setter
 public class CsvData {
+    @CsvCell("Id")
     private int id;
 
     @CsvCell("Item")
