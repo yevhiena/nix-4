@@ -20,15 +20,6 @@ import java.util.Properties;
 
 public class Main {
 
-    // check user
-    // logger
-    // custom exceptions
-    // only 1 row in result set !??!!?!
-    // close result set in jdbc
-
-    //        111111111
-    //        2010-12-10
-    //        2021-06-14
 
     public static void main(String[] args) {
 
@@ -56,7 +47,7 @@ public class Main {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 

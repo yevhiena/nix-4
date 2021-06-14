@@ -2,11 +2,11 @@ package ua.com.alevel.dao.impl;
 
 import org.hibernate.Session;
 import ua.com.alevel.dao.CommonOperationDao;
+import ua.com.alevel.exception.DataNotFoundException;
 import ua.com.alevel.model.dto.AccountDto;
 import ua.com.alevel.model.entity.*;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.List;
 
 public class JPAOperationDaoImpl implements CommonOperationDao {
@@ -18,7 +18,7 @@ public class JPAOperationDaoImpl implements CommonOperationDao {
 
 
     @Override
-    public List<Category> findAllCategories() throws SQLException {
+    public List<Category> findAllCategories() {
         try {
             session.beginTransaction();
 
@@ -28,12 +28,12 @@ public class JPAOperationDaoImpl implements CommonOperationDao {
             return categories;
         }catch (Exception e){
             session.getTransaction().rollback();
-            throw new SQLException("Data layer exception");
+            throw e;
         }
     }
 
     @Override
-    public void createOperation(Operation operation) throws SQLException {
+    public void createOperation(Operation operation) {
         try {
             session.beginTransaction();
             session.persist(operation);
@@ -45,15 +45,21 @@ public class JPAOperationDaoImpl implements CommonOperationDao {
             session.getTransaction().commit();
         }catch (Exception e){
             session.getTransaction().rollback();
-            throw new SQLException("Data layer exception");
+            throw e;
         }
     }
 
 
     @Override
-    public Account findAccountByNumber(long number) throws SQLException {
+    public Account findAccountByNumber(long number) throws DataNotFoundException {
         try {
             session.beginTransaction();
+            Boolean checkIfExists = session.createQuery(" select (count(a) > 0) as exists from Account a where a.accountNumber = :number", Boolean.class)
+                    .setParameter("number", number).getSingleResult();
+            if(!checkIfExists){
+                session.getTransaction().rollback();
+                throw new DataNotFoundException("Account not found, number: " + number);
+            }
 
             Account account = session.createQuery("from Account a where a.accountNumber = :number", Account.class)
                     .setParameter("number", number)
@@ -63,15 +69,20 @@ public class JPAOperationDaoImpl implements CommonOperationDao {
             return account;
         }catch (Exception e){
             session.getTransaction().rollback();
-            throw new SQLException(e.getCause());
+            throw e;
         }
     }
 
     @Override
-    public List<AccountDto> findAccountByUserId(long id) throws SQLException {
+    public List<AccountDto> findAccountByUserId(long id) throws DataNotFoundException {
         try {
             session.beginTransaction();
-
+            Boolean checkIfExists = session.createQuery(" select (count(a) > 0) as exists from Account a where a.user.id = :id", Boolean.class)
+                    .setParameter("id", id).getSingleResult();
+            if(!checkIfExists){
+                session.getTransaction().rollback();
+                throw new DataNotFoundException("Accounts not found for user with id: " + id);
+            }
             List<AccountDto> accountDto = session.createQuery("select new ua.com.alevel.model.dto.AccountDto(" +
                     "a.accountNumber, a.balance)" +
                     " from Account a where a.user.id= :id", AccountDto.class)
@@ -81,15 +92,20 @@ public class JPAOperationDaoImpl implements CommonOperationDao {
             return accountDto;
         }catch (Exception e){
             session.getTransaction().rollback();
-            throw new SQLException(e.getCause());
+            throw e;
         }
     }
 
     @Override
-    public long getUserIdByEmail(String email) throws SQLException {
+    public long getUserIdByEmail(String email) throws DataNotFoundException {
         try {
             session.beginTransaction();
-
+            Boolean checkIfExists = session.createQuery(" select (count(a) > 0) as exists from User a where a.email = :email", Boolean.class)
+                    .setParameter("email", email).getSingleResult();
+            if(!checkIfExists){
+                session.getTransaction().rollback();
+                throw new DataNotFoundException("User not found with email: " + email);
+            }
             User user = session.createQuery("from User u where u.email = :email", User.class)
                     .setParameter("email", email)
                     .getSingleResult();
@@ -98,7 +114,7 @@ public class JPAOperationDaoImpl implements CommonOperationDao {
             return user.getId();
         }catch (Exception e){
             session.getTransaction().rollback();
-            throw new SQLException(e.getCause());
+            throw e;
         }
     }
 }

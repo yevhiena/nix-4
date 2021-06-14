@@ -1,6 +1,7 @@
 package ua.com.alevel.service;
 
 import ua.com.alevel.dao.CommonOperationDao;
+import ua.com.alevel.exception.DataNotFoundException;
 import ua.com.alevel.model.dto.AccountDto;
 import ua.com.alevel.model.dto.OperationDto;
 import ua.com.alevel.model.dto.TransferResultDto;
@@ -22,7 +23,7 @@ public class OperationService{
     }
 
 
-    public TransferResultDto makeTransfer(OperationDto operationDto) throws SQLException {
+    public TransferResultDto makeTransfer(OperationDto operationDto) throws SQLException, DataNotFoundException {
 
             Account account = operationDao.findAccountByNumber(operationDto.getAccountNumber());
             Operation operation = new Operation(account, operationDto.getTransferAmount());
@@ -62,7 +63,7 @@ public class OperationService{
 
     }
 
-    public List<AccountDto> getAccounts(String email) throws SQLException {
+    public List<AccountDto> getAccounts(String email) throws DataNotFoundException, SQLException {
         long id = operationDao.getUserIdByEmail(email);
         return operationDao.findAccountByUserId(id);
     }

@@ -1,5 +1,9 @@
 package ua.com.alevel.controller;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ua.com.alevel.exception.DataNotFoundException;
 import ua.com.alevel.model.dto.AccountDto;
 import ua.com.alevel.model.dto.OperationDto;
 import ua.com.alevel.model.dto.TransferResultDto;
@@ -20,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+
+    private static final Logger log = LoggerFactory.getLogger(Controller.class);
     private BufferedReader bufferedReader;
     private final String email;
 
@@ -60,7 +66,7 @@ public class Controller {
 
 
     private void performOperation() throws Exception {
-
+        log.info("Start performing operation");
         try {
             List<AccountDto> accountDtos = operationService.getAccounts(email);
             System.out.println("Choose account from:");
@@ -68,34 +74,57 @@ public class Controller {
                     accountDtos) {
                 System.out.println("Account number: " + ac.getAccountNumber());
             }
-        } catch (SQLException e) {
-            throw new Exception("Account does not exist");
+        } catch (DataNotFoundException e) {
+            System.out.println(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         }
 
-        System.out.println("\nEnter account number");
-        long number = Long.parseLong(bufferedReader.readLine());
-        System.out.println("Enter amount of transfer");
-        BigDecimal amount = new BigDecimal(bufferedReader.readLine());
-        System.out.println("Enter category");
+        try {
+            System.out.println("\nEnter account number");
+            long number = Long.parseLong(bufferedReader.readLine());
+            log.info("Entering an account number: " + number);
+            System.out.println("Enter amount of transfer");
+            BigDecimal amount = new BigDecimal(bufferedReader.readLine());
+            log.info("Entering an amount of transfer: " + amount);
+            System.out.println("Enter category");
 
-        List<String> cat = new ArrayList<>();
-        System.out.println("Input amount of categories: ");
-        int amountOfCat = Integer.parseInt(bufferedReader.readLine());
-        for (int i = 0; i < amountOfCat; i++) {
-            System.out.println("Write next category: ");
-            String category = bufferedReader.readLine();
-            cat.add(category);
+            List<String> cat = new ArrayList<>();
+            System.out.println("Input amount of categories: ");
+            int amountOfCat = Integer.parseInt(bufferedReader.readLine());
+            log.info("Entering an amount of categories: " + amountOfCat);
+            for (int i = 0; i < amountOfCat; i++) {
+                System.out.println("Write next category: ");
+                String category = bufferedReader.readLine();
+                log.info("Entering category: " + category);
+                cat.add(category);
+            }
+            log.info("Starting operation");
+            OperationDto operationDto = new OperationDto(number, amount, cat);
+            TransferResultDto transferResultDto = operationService.makeTransfer(operationDto);
+            log.info("Result of operation: " +  transferResultDto.getStatus());
+            System.out.println("Operation: " + transferResultDto.getStatus());
+            if(transferResultDto.getStatus().equals(TransferResult.Status.REJECTED)){
+                System.out.println("Reason " + transferResultDto.getReason());
+                log.info("Reason of rejection: " +  transferResultDto.getReason());
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input for number");
+            log.error("Invalid input", e);
+        }  catch (SQLException e) {
+            System.out.println(e.getMessage());
+            log.error("Data layer error", e);
+            throw new RuntimeException();
+        } catch (DataNotFoundException e) {
+            System.out.println(e.getMessage());
+            log.error(e.getMessage(), e);
         }
-        OperationDto operationDto = new OperationDto(number, amount, cat);
-        TransferResultDto transferResultDto = operationService.makeTransfer(operationDto);
-        System.out.println("Operation: " + transferResultDto.getStatus());
-        if(transferResultDto.getStatus().equals(TransferResult.Status.REJECTED)){
-            System.out.println("Reason " + transferResultDto.getReason());
-        }
+
 
     }
 
     private void exportOperationsInCSV() throws Exception {
+        log.info("Start performing report export in csv ");
         try {
             List<AccountDto> accountDtos = reportService.getAccounts(email);
             System.out.println("Choose account from:");
@@ -103,17 +132,23 @@ public class Controller {
                     accountDtos) {
                 System.out.println("Account number: " + ac.getAccountNumber());
             }
-        } catch (SQLException e) {
-            throw new Exception("Account does not exist");
+        } catch (DataNotFoundException e) {
+            log.error(e.getMessage(), e);
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
-        System.out.println("Enter account number ");
-        long accountNumber = Long.parseLong(bufferedReader.readLine());
-        System.out.println("Input start date in format yyyy-MM-dd");
-        String start = bufferedReader.readLine();
-        System.out.println("Input end date in format yyyy-MM-dd");
-        String end = bufferedReader.readLine();
 
         try {
+            System.out.println("Enter account number ");
+            long accountNumber = Long.parseLong(bufferedReader.readLine());
+            log.info("Entering account number: "+ accountNumber);
+            System.out.println("Input start date in format yyyy-MM-dd");
+            String start = bufferedReader.readLine();
+            log.info("Entering start date: "+ start);
+            System.out.println("Input end date in format yyyy-MM-dd");
+            String end = bufferedReader.readLine();
+            log.info("Entering end date: "+ end);
+
             LocalDate localDate = LocalDate.parse(start);
             LocalDateTime localDateTime = localDate.atStartOfDay();
             Instant startDate = localDateTime.toInstant(ZoneOffset.UTC);
@@ -121,13 +156,23 @@ public class Controller {
             LocalDate localDate1 = LocalDate.parse(end);
             LocalDateTime localDateTime1 = localDate1.atTime(23, 59);
             Instant endDate = localDateTime1.toInstant(ZoneOffset.UTC);
-
+            log.info("Exporting report to csv..");
             reportService.generateReport(accountNumber, startDate, endDate);
             System.out.println("Report exported to report.csv");
+            log.info("Report has been successfully exported");
         }catch (DateTimeParseException e){
             System.out.println("Sorry, invalid input of date, does not match pattern");
-        } catch (SQLException e){
-            System.out.println("Sorry, Account number not found");
+            log.error("Invalid input of date", e);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            log.error("Data layer error", e);
+            throw new RuntimeException();
+        }catch (NumberFormatException e){
+            System.out.println("Invalid input of number");
+            log.error("Invalid input of number", e);
+        } catch (DataNotFoundException e) {
+            System.out.println(e.getMessage());
+            log.error(e.getMessage(), e);
         }
 
     }

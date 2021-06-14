@@ -2,6 +2,7 @@ package ua.com.alevel.service;
 
 import com.opencsv.CSVWriter;
 import ua.com.alevel.dao.CommonReportDao;
+import ua.com.alevel.exception.DataNotFoundException;
 import ua.com.alevel.model.dto.AccountDto;
 import ua.com.alevel.model.dto.ReportDto;
 import ua.com.alevel.model.entity.Category;
@@ -25,14 +26,14 @@ public class ReportService {
     }
 
 
-    public void generateReport(long number, Instant startDate, Instant endDate) throws SQLException, IOException {
+    public void generateReport(long number, Instant startDate, Instant endDate) throws SQLException, IOException, DataNotFoundException {
         List<ReportDto> operations = reportDao.findAllOperationsByAccountNumber(number,startDate, endDate);
         BigDecimal income = calculateIncome(operations);
         BigDecimal saldo = calculateSaldo(income, operations);
         generateCSV(convert(operations), income, saldo);
     }
 
-    public List<AccountDto> getAccounts(String email) throws SQLException {
+    public List<AccountDto> getAccounts(String email) throws SQLException, DataNotFoundException {
         long id = reportDao.getUserIdByEmail(email);
         return reportDao.findAccountByUserId(id);
     }
