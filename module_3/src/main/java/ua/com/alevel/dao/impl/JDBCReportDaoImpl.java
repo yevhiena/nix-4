@@ -76,7 +76,7 @@ public class JDBCReportDaoImpl implements CommonReportDao {
                 if(!rs.next()) {
                     rs.close();
                     throw new RuntimeException();}
-            long id = rs.getInt(1);
+            long id = rs.getInt("id");
             rs.close();
             return id;
         }catch (RuntimeException e){
@@ -98,17 +98,20 @@ public class JDBCReportDaoImpl implements CommonReportDao {
             read.setLong(1, id);
             ResultSet rs = read.executeQuery();
             List<AccountDto> accountDto = new ArrayList<>();
+
             if(!rs.next()) {
                 rs.close();
                 throw new RuntimeException();}
-            while (rs.next()){
-                long accountNumber = rs.getLong("number");
-                BigDecimal balance= rs.getBigDecimal("balance");
-                accountDto.add(new AccountDto(accountNumber, balance));
-
+            else {
+               do{
+                    long accountNumber = rs.getLong("number");
+                    BigDecimal balance= rs.getBigDecimal("balance");
+                    accountDto.add(new AccountDto(accountNumber, balance));
+                } while (rs.next());
+                rs.close();
+                return accountDto;
             }
-            rs.close();
-            return accountDto;
+
         }catch (RuntimeException e){
             throw  new  DataNotFoundException("Accounts not found for user with id: " + id);
         }

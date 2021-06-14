@@ -72,7 +72,7 @@ public class Controller {
             System.out.println("Choose account from:");
             for (AccountDto ac :
                     accountDtos) {
-                System.out.println("Account number: " + ac.getAccountNumber());
+                System.out.println("Account number: " + ac.getAccountNumber() + "\tbalance: " + ac.getBalance());
             }
         } catch (DataNotFoundException e) {
             System.out.println(e.getMessage());
