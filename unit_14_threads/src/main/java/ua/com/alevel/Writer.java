@@ -44,6 +44,10 @@ public class Writer implements Runnable{
 
     private void writeTextInFile(String text)  {
         try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw")) {
+            StringBuilder textBuilder = new StringBuilder(text);
+            textBuilder.append(" ".repeat(Math.max(0, previous.length() - textBuilder.length())));
+            text = textBuilder.toString();
+
             randomAccessFile.write(text.getBytes(StandardCharsets.UTF_8), 0, text.length());
         } catch (IOException e) {
             throw new RuntimeException(e);
