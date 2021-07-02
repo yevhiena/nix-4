@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ConcurrentHashMap;
 
 @WebServlet(name = "app-servlet", urlPatterns = "/app")
 public class Servlet extends HttpServlet {
     private static final long serialVersionUID = -8948379822734246956L;
-    private static final Set<String> addresses = new CopyOnWriteArraySet<>();
+    private static final Set<String> addresses = ConcurrentHashMap.newKeySet();
 
     private static final Logger log = LoggerFactory.getLogger(Servlet.class);
 
